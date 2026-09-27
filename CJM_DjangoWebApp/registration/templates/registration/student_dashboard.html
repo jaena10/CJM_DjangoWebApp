@@ -1,6 +1,8 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Student Dashboard</title>
 </head>
 
@@ -8,36 +10,56 @@
 
     <h1>Student Dashboard</h1>
 
-    <h2>Total Students</h2>
+    <h2>
+        Total Students:
+        <span id="student-count">0</span>
+    </h2>
 
-    <p>
-        {{ total_students }}
-    </p>
+    <p id="loading-message">Loading students...</p>
+
+    <p id="error-message"></p>
+
+    <table border="1" id="student-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Program</th>
+                <th>Year Level</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+
+        <tbody id="student-table-body">
+        </tbody>
+    </table>
 
     <hr>
 
-    <h2>Program Distribution</h2>
+    <h2>Students by Program</h2>
 
     <table border="1">
-        <tr>
-            <th>Program</th>
-            <th>Total</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Program</th>
+                <th>Total</th>
+            </tr>
+        </thead>
 
-        {% for item in program_summary %}
-        <tr>
-            <td>{{ item.program }}</td>
-            <td>{{ item.total }}</td>
-        </tr>
-
-        {% empty %}
-        <tr>
-            <td colspan="2">
-                No program data available.
-            </td>
-        </tr>
-        {% endfor %}
-
+        <tbody>
+            {% for item in program_summary %}
+            <tr>
+                <td>{{ item.program }}</td>
+                <td>{{ item.total }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">
+                    No program data available.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
     <hr>
@@ -45,25 +67,27 @@
     <h2>Students by Year Level</h2>
 
     <table border="1">
-        <tr>
-            <th>Year Level</th>
-            <th>Total</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Year Level</th>
+                <th>Total</th>
+            </tr>
+        </thead>
 
-        {% for item in year_summary %}
-        <tr>
-            <td>{{ item.year_level }}</td>
-            <td>{{ item.total }}</td>
-        </tr>
-
-        {% empty %}
-        <tr>
-            <td colspan="2">
-                No year-level data available.
-            </td>
-        </tr>
-        {% endfor %}
-
+        <tbody>
+            {% for item in year_summary %}
+            <tr>
+                <td>{{ item.year_level }}</td>
+                <td>{{ item.total }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">
+                    No year-level data available.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
     <hr>
@@ -71,6 +95,8 @@
     <a href="{% url 'student_list' %}">
         Back to Student List
     </a>
+
+    <script src="{% static 'registration/js/student_dashboard.js' %}"></script>
 
 </body>
 </html>
